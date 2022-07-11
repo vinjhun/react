@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import './index.css';
@@ -14,9 +14,9 @@ root.render(
     <Helmet>
       <script src='util/utils.js' type='text/babel'></script>
     </Helmet>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );
 
