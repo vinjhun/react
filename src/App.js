@@ -1,23 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
 
+import { Routes, Route } from 'react-router-dom';
+import Navigation from './navigation/navigation';
+
+import Home from './pages/home/home';
+import Constant from './constant/Constant';
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path='/' key='nav' element={<Navigation />}>
+          <Route key='home' index element={<Home />} />
+          {Constant.MAIN_ROUTES.map(({ name, path, Component }) => (
+            <Route key={name} path={path} element={<Component />}></Route>
+          ))}
+        </Route>
+      </Routes>
     </div>
   );
 }
