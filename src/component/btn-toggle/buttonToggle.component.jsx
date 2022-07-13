@@ -1,69 +1,19 @@
-import { useState, useEffect } from 'react';
-
-function onChangeHandler(e) {
-  e.preventDefault();
-  console.log('Check', e.target);
-
-  var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-  var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-  // toggle icons inside button
-  themeToggleDarkIcon.classList.toggle('hidden');
-  themeToggleLightIcon.classList.toggle('hidden');
-
-  // if set via local storage previously
-  if (localStorage.getItem('color-theme')) {
-    if (localStorage.getItem('color-theme') === 'light') {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('color-theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('color-theme', 'light');
-    }
-
-    // if NOT set via local storage previously
-  } else {
-    if (document.documentElement.classList.contains('dark')) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('color-theme', 'light');
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('color-theme', 'dark');
-    }
-  }
-}
-
-function isDarkMode() {
-  return (
-    localStorage.getItem('color-theme') === 'dark' ||
-    (!('color-theme' in localStorage) &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches)
-  );
-}
+import { ThemeContext } from '../../App';
+import { useContext } from 'react';
 
 const ButtonToggle = () => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(
-    () => {
-      setDarkMode(isDarkMode());
-    },
-    [],
-    () => {
-      console.log('toggle');
-    }
-  );
+  const { mode, toggleMode } = useContext(ThemeContext);
 
   return (
     <button
       id='theme-toggle'
       type='button'
-      onClick={onChangeHandler}
+      onClick={toggleMode}
       className='text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2 mr-10'
     >
       <svg
         id='theme-toggle-dark-icon'
-        className={`w-5 h-5 ${darkMode ? 'hidden' : ''}`}
+        className={`w-5 h-5 ${mode === 'dark' ? 'hidden' : ''}`}
         fill='currentColor'
         viewBox='0 0 20 20'
         xmlns='http://www.w3.org/2000/svg'
@@ -72,7 +22,7 @@ const ButtonToggle = () => {
       </svg>
       <svg
         id='theme-toggle-light-icon'
-        className={`w-5 h-5 ${darkMode ? '' : 'hidden'}`}
+        className={`w-5 h-5 ${mode === 'dark' ? '' : 'hidden'}`}
         fill='currentColor'
         viewBox='0 0 20 20'
         xmlns='http://www.w3.org/2000/svg'

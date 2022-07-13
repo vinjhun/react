@@ -9,22 +9,22 @@ import './navigation.css';
 
 const Navigation = () => {
   let location = useLocation();
-
+  
   return (
     <Fragment>
       <div
         className='flex text-end p-2.5 
                   bg-slate-50 dark:bg-gray-800 
-                  justify-items:center 
+                  justify-center 
                   shadow-lg dark:shadow-slate-800'
       >
-        <div className='nav-header'>
+        <div className='nav-header flex'>
           <NavLink key='home' to='/' className='p-2.5 dark:text-white'>
             Home
           </NavLink>
         </div>
 
-        <div className='nav-item grow'>
+        <div className='nav-item grow flex justify-end'>
           <ButtonToggle />
           {Constant.MAIN_ROUTES.map(({ path, name }) => (
             <NavLink
@@ -42,7 +42,7 @@ const Navigation = () => {
         </div>
       </div>
 
-      <div className='text-center min-h-screen dark:bg-black dark:text-white p-[200px]'>
+      <div className='text-center min-h-screen dark:bg-black dark:text-white py-[200px]'>
         <TransitionGroup component={null}>
           <CSSTransition
             key={location.key}

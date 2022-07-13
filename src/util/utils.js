@@ -1,3 +1,6 @@
+console.log("Helmet Re-rendered");
+
+
 if (
   localStorage.getItem('color-theme') === 'dark' ||
   (!('color-theme' in localStorage) &&
