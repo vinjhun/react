@@ -1,8 +1,45 @@
-import { ThemeContext } from '../../App';
-import { useContext } from 'react';
+import { useState, useEffect } from 'react';
 
 const ButtonToggle = () => {
-  const { mode, toggleMode } = useContext(ThemeContext);
+  const [darkMode, setMode] = useState('');
+
+  useEffect(() => {
+    if (
+      localStorage.getItem('color-theme') === 'dark' ||
+      (!('color-theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+      setMode('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      setMode('light');
+    }
+  }, []);
+
+  function toggleMode() {
+    if (localStorage.getItem('color-theme')) {
+      if (localStorage.getItem('color-theme') === 'light') {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+        setMode('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+        setMode('light');
+      }
+    } else {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+        setMode('light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+        setMode('dark');
+      }
+    }
+  }
 
   return (
     <button
@@ -14,7 +51,7 @@ const ButtonToggle = () => {
           'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2 mr-10',
       }}
     >
-      {mode === 'dark' && (
+      {darkMode === 'dark' && (
         <svg
           id='theme-toggle-light-icon'
           className='w-5 h-5'
@@ -30,7 +67,7 @@ const ButtonToggle = () => {
         </svg>
       )}
 
-      {mode === 'light' && (
+      {darkMode === 'light' && (
         <svg
           id='theme-toggle-dark-icon'
           className='w-5 h-5'

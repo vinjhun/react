@@ -1,10 +1,12 @@
+import Container from '../../component/container/container.component';
 
 const Item = () => {
-    return (
-        <div>
-            <h1>I am Item Page</h1>
-        </div>
-    )
+  return (
+    <>
+      <h1> Some Item List </h1>
+      <Container />
+    </>
+  );
 };
 
 export default Item;
